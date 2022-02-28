@@ -7,7 +7,7 @@ export const replaceDynamic: TypePlugin = ({ values, text }) => {
   getTypedEntries(values).forEach(([paramName, value]) => {
     if (value == null) return;
 
-    textWithValues = textWithValues.replaceAll(`{${paramName}}`, String(value));
+    textWithValues = textWithValues.replace(new RegExp(`{${paramName}}`, 'g'), String(value));
   });
 
   return textWithValues;
