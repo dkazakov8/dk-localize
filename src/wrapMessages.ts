@@ -2,10 +2,7 @@ import { errors } from './errors';
 import { TypeMessage } from './types';
 import { isPlainObject } from './utils/isPlainObject';
 
-export function wrapMessages<T extends Record<string, string>>(
-  dirname: string,
-  obj: T
-): Record<keyof T, TypeMessage> {
+export function wrapMessages<T>(dirname: string, obj: T): Record<keyof T, TypeMessage> {
   if (typeof dirname !== 'string' || !dirname) {
     throw new Error(`${errors.INCORRECT_DIRNAME}: dirname is not a string or empty`);
   }
@@ -19,6 +16,7 @@ export function wrapMessages<T extends Record<string, string>>(
 
   // eslint-disable-next-line guard-for-in
   for (const key in obj) {
+    // @ts-ignore
     messages[key] = {
       name: `${dirnameNormalized}__${key}`,
       defaultValue: obj[key],
